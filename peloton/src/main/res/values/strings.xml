@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Peloton Cycle</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- Strings for activity_main.xml -->
+    <string name="input_stream_names_instruction_string">Input Stream Names and then Press Start </string>
+    <string name = "btn_start">Start</string>
+
+    <!-- Strings for activity_stream.xml -->
+    <string name="instruction_string">Specify Stream Names, and then press BUTTON to begin streaming</string>
+    <string name="edittext_stream_one_name">Stream One : </string>
+    <string name="edittext_stream_two_name">Stream Two : </string>
+    <string name="default_stream_num">SMILE</string>
+    <string name = "btn_next_number">Next Number</string>
+    <string name = "btn_end">END</string>
+    <string name="title_activity_stream">StreamActivity</string>
+
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+</resources>

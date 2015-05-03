@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="peleton_red" type="color">#FFCD3363</item>
+    <item name="gray" type="color">#FFCD3363</item>
+
+    <color name="black_overlay">#66000000</color>
+</resources>
