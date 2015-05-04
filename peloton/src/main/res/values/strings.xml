@@ -3,14 +3,16 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name = "image_content_description">Logo</string>
+
     <!-- Strings for activity_main.xml -->
-    <string name="input_stream_names_instruction_string">Input Stream Names and then Press Start </string>
+    <string name="input_stream_names_instruction_string">Input Stream Names and then Press START </string>
     <string name = "btn_start">Start</string>
 
     <!-- Strings for activity_stream.xml -->
     <string name="instruction_string">Specify Stream Names, and then press BUTTON to begin streaming</string>
-    <string name="edittext_stream_one_name">Stream One : </string>
-    <string name="edittext_stream_two_name">Stream Two : </string>
+    <string name="edit_text_stream_one_name">STREAM ONE: </string>
+    <string name="edit_text_stream_two_name">STREAM TWO: </string>
     <string name="default_stream_num">SMILE</string>
     <string name = "btn_next_number">Next Number</string>
     <string name = "btn_end">END</string>

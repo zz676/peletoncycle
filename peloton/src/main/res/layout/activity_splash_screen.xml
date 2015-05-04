@@ -11,7 +11,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@mipmap/ic_launcher"
-        android:textStyle="bold"
-        android:visibility="visible" />
-
+        android:contentDescription="@string/image_content_description" />
 </FrameLayout>

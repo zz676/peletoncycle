@@ -2,43 +2,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
-    android:weightSum="10"
-    tools:context=".MainActivity"
     android:background="@android:color/white"
     android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:weightSum="10"
+    tools:context=".MainActivity">
 
     <TextView
-        android:text="@string/input_stream_names_instruction_string"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:layout_marginBottom="15dp"
         android:layout_gravity="center_horizontal"
-        android:gravity="bottom"
-        android:textSize="18sp"
+        android:layout_weight="3"
+        android:drawableLeft="@mipmap/ic_launcher"
+        android:drawablePadding="10dp"
+        android:drawableStart="@mipmap/ic_launcher"
+        android:gravity="center_vertical"
         android:maxLines="2"
-        android:textColor="@android:color/black" />
+        android:text="@string/input_stream_names_instruction_string"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="5"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_background_stream_display">
+            android:background="@drawable/text_view_border">
 
             <TextView
                 style="@style/generalTextViewStyle"
-                android:text="@string/edittext_stream_one_name" />
+                android:text="@string/edit_text_stream_one_name" />
 
             <EditText
                 android:id="@+id/streamOneNameEditTextID"
@@ -48,12 +49,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/custom_background_stream_display">
+            android:layout_marginTop="50dp"
+            android:background="@drawable/text_view_border">
 
             <TextView
                 style="@style/generalTextViewStyle"
-                android:text="@string/edittext_stream_two_name" />
+                android:text="@string/edit_text_stream_two_name" />
 
             <EditText
                 android:id="@+id/streamTwoNameEditTextID"
@@ -63,14 +64,12 @@
 
     <Button
         android:id="@+id/start_btn"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:layout_marginTop="5dp"
-        android:text="@string/btn_start"
-        android:textSize="30sp"
         android:background="@color/peleton_red"
-        android:onClick="startStream"></Button>
+        android:onClick="startStream"
+        android:text="@string/btn_start"
+        android:textSize="35sp" />
 
 </LinearLayout>

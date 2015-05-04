@@ -1,64 +1,99 @@
 package com.pelotoncycle.communication.pelotoncycle.models;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
- * Created by Zhisheng on 5/2/2015.
+ * A instance of this class stands for a piece of data retrieved from a stream at each time
+ *
+ * @author Zhisheng Zhou
+ * @version 1.0
  */
-public class DataPiece implements Comparable<DataPiece>{
+public class DataPiece implements Comparable<DataPiece> {
 
-    private String dName;
+    private final static String TAG = "DataPiece";
+
+    /**
+     * name of the stream
+     */
+    private String sName;
+
+    /**
+     * last number
+     */
     private int last;
+
+    /**
+     * current number
+     */
     private int current;
 
-
-    public String getdName() {
-        return dName;
+    /**
+     * Getter for sName
+     *
+     * @return sName
+     */
+    public String getsName() {
+        return sName;
     }
 
-    public void setdName(String dName) {
-        this.dName = dName;
+    /**
+     * Setter for sName
+     *
+     * @param sName the value to be set
+     */
+    public void setsName(String sName) {
+        this.sName = sName;
     }
 
+    /**
+     * Getter for last
+     *
+     * @return last
+     */
     public int getLast() {
         return last;
     }
 
+    /**
+     * Setter for last
+     *
+     * @param last the value to be set
+     */
     public void setLast(int last) {
         this.last = last;
     }
 
+    /**
+     * Getter for current
+     *
+     * @return current
+     */
     public int getCurrent() {
         return current;
     }
 
+    /**
+     * Setter for current
+     *
+     * @param current the value to be set
+     */
     public void setCurrent(int current) {
         this.current = current;
     }
 
-
-    public static DataPiece jsonToDataPieceObject(final JSONObject jsonObject) {
-
-        try {
-            DataPiece result = new DataPiece();
-            result.setdName(jsonObject.getString("stream"));
-            result.setLast(jsonObject.getInt("last"));
-            result.setCurrent(jsonObject.getInt("current"));
-            return result;
-        } catch (JSONException ex) {
-            Logger.getLogger(DataPiece.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+    @Override
+    public int compareTo(@NonNull final DataPiece obj) {
+        if (this.last == obj.last)
+            return this.current - obj.current;
+        return this.last - obj.last;
     }
 
     @Override
-    public int compareTo(DataPiece obj) {
-        if(this.last == obj.last)
-            return this.current - obj.current;
-        return this.last - obj.last;
+    public String toString() {
+        return "Stream Name:" + this.sName + " last:" + this.last + " current:" + this.current;
     }
 }

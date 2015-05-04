@@ -19,6 +19,7 @@
         <activity
             android:name=".Controllers.StreamActivity"
             android:label="@string/title_activity_stream"
+            android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
         <activity

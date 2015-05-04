@@ -12,7 +12,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.IOException;
 
 /**
- * Created by zhizhou on 11/5/2014.
+ * A class including methods, which are used to check networking availability
+ *
+ * @author Zhisheng Zhou
+ * @version 1.0
  */
 public class NetworkingChecker {
 
@@ -27,59 +30,67 @@ public class NetworkingChecker {
      * @param serverUrl the server to be connected to
      */
     public static void isNetworkAvailable(final Handler handler, final int timeout, final String serverUrl) {
+        try {
+            new Thread() {
+                private boolean responded = false;
 
-        new Thread() {
-            private boolean responded = false;
+                @Override
+                public void run() {
 
-            @Override
-            public void run() {
-
-                // set 'responded' to TRUE if is able to connect with the server (responds fast)
-                new Thread() {
-                    @Override
-                    public void run() {
-                        HttpGet requestForTest = new HttpGet(serverUrl);
-                        try {
-                            new DefaultHttpClient().execute(requestForTest); // can last...
-                            responded = true;
-                        } catch (IOException e) {
-                            Log.e(TAG, e.getMessage());
+                    // set 'responded' to TRUE if is able to connect with the server (responds fast)
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            HttpGet requestForTest = new HttpGet(serverUrl);
+                            try {
+                                new DefaultHttpClient().execute(requestForTest); // can last...
+                                responded = true;
+                            } catch (IOException e) {
+                                Log.e(TAG, e.getMessage());
+                            }
                         }
-                    }
-                }.start();
+                    }.start();
 
-                try {
-                    int waited = 0;
-                    while (!responded && (waited < timeout)) {
-                        sleep(100);
+                    try {
+                        int waited = 0;
+                        while (!responded && (waited < timeout)) {
+                            sleep(100);
+                            if (!responded) {
+                                waited += 100;
+                            }
+                        }
+                    } catch (InterruptedException e) {
+                        Log.e(TAG, e.getMessage());
+                    } finally {
                         if (!responded) {
-                            waited += 100;
+                            handler.sendEmptyMessage(0);
+                        } else {
+                            handler.sendEmptyMessage(1);
                         }
-                    }
-                } catch (InterruptedException e) {
-                    Log.e(TAG, e.getMessage());
-                } finally {
-                    if (!responded) {
-                        handler.sendEmptyMessage(0);
-                    } else {
-                        handler.sendEmptyMessage(1);
                     }
                 }
-            }
-        }.start();
+            }.start();
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage() + " in isNetworkAvailable.");
+        }
     }
 
 
     /**
      * check whether your android device is online
      *
-     * @param mContext
-     * @return true if networking connection is available, false otherwise
+     * @param mContext the activity where this method is called
+     * @return true if there is networking connection available, false otherwise
      */
     public static boolean isOnline(final Context mContext) {
-        ConnectivityManager cm =
-                (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
+        try {
+            ConnectivityManager cm =
+                    (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+            return netInfo != null && netInfo.isConnectedOrConnecting();
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage() + " in isOnline.");
+        }
+        return false;
     }
 }
