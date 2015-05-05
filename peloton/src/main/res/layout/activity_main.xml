@@ -23,7 +23,7 @@
         android:drawableStart="@mipmap/ic_info"
         android:gravity="center_vertical"
         android:maxLines="5"
-        android:lines="3"
+        android:lines="4"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:onClick="showInstruction"/>
