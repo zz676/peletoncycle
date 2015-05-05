@@ -35,10 +35,7 @@ public class MainActivity extends Activity {
 
     private static final String TAG = "MainActivity";
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
-    private  final String INSTRUCTION_STRING = "Input Stream Names and then Press START";
     protected final static String PELOTON_API_SERVER = "https://api.pelotoncycle.com/quiz/next/";
-    protected final static String NO_NETWORKING_CONNECTION = "No networking connection, please check.";
-    protected final static String SERVER_UNREACHABLE = "The server can't be reached, please check.";
     protected static final String STREAM_ONE_NAME = "com.pelotoncycle.communication.pelotoncycle.Controllers.MainActivity.streamonename";
     protected static final String STREAM_TWO_NAME = "com.pelotoncycle.communication.pelotoncycle.Controllers.MainActivity.streamtwoname";
     protected static final String PREFS_NAMES = "com.pelotoncycle.communication.pelotoncycle.Controllers.MainActivity.preferences";
@@ -121,7 +118,7 @@ public class MainActivity extends Activity {
             instructionTxtView.setText("");
             isInstructionShown = false;
         } else {
-            instructionTxtView.setText(INSTRUCTION_STRING);
+            instructionTxtView.setText(getResources().getString(R.string.instruction_string));
             isInstructionShown = true;
         }
     }
@@ -135,7 +132,7 @@ public class MainActivity extends Activity {
             if (NetworkingChecker.isOnline(this)) {
                 startButton.setEnabled(true);
             } else {
-                Toast.makeText(MainActivity.this, NO_NETWORKING_CONNECTION, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, getResources().getString(R.string.no_networking_connection), Toast.LENGTH_SHORT).show();
                 startButton.setEnabled(false);
             }
         } catch (Exception ex) {
@@ -190,6 +187,13 @@ public class MainActivity extends Activity {
                 txtStreamTwoName.setError("This field can't be empty.");
                 return false;
             }
+
+            if(strStreamOneName.equals(strStreamTwoName)){
+
+                txtStreamTwoName.setError("Two streams couldn't have same names.");
+                return false;
+            }
+
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage() + " in validateStreamNames.");
         }

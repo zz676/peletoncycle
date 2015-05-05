@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:weightSum="10"
     tools:context=".StreamActivity">
@@ -15,6 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="6"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
         android:background="@drawable/bottom_three_sides_border">
 
         <TextView
@@ -32,11 +32,13 @@
         android:id="@+id/number_textview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_gravity="center_vertical"
         android:layout_weight="2"
         android:background="@drawable/top_three_sides_border"
         android:gravity="center_horizontal|center_vertical"
-        android:hint="~ ~"
+        android:hint="~  ~"
         android:textColor="@android:color/black"
         android:textSize="60sp" />
 
@@ -45,8 +47,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
         android:layout_weight="2"
         android:background="@color/peleton_red"
         android:onClick="showNextNumber"

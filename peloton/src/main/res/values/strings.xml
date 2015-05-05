@@ -6,14 +6,16 @@
     <string name = "image_content_description">Logo</string>
 
     <!-- Strings for activity_main.xml -->
-    <string name="input_stream_names_instruction_string">Input Stream Names and then Press START </string>
-    <string name = "btn_start">Start</string>
+    <string name="instruction_string">Input stream names and press START; Press NEXT NUMBER to display next number. </string>
+    <string name = "no_networking_connection">"No networking connection, please check."</string>
+    <string name = "server_unreachable">"The server can't be reached, please check."</string>
+    <string name = "btn_start">START</string>
 
     <!-- Strings for activity_stream.xml -->
     <string name="edit_text_stream_one_name">STREAM ONE: </string>
     <string name="edit_text_stream_two_name">STREAM TWO: </string>
     <string name="default_stream_num">SMILE</string>
-    <string name = "btn_next_number">Next Number</string>
+    <string name = "btn_next_number">NEXT NUMBER</string>
     <string name = "btn_end">END</string>
     <string name="title_activity_stream">StreamActivity</string>
 
