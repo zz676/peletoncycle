@@ -38,6 +38,7 @@ import java.util.Set;
  * In this algorithm, only one of the two queues will become empty at each time. Before popping up numbers from two queues,
  * the sizes of them will be checked, if one of them is empty, {@link StreamDataTask} will be started to get the next {@link DataPiece} from the right stream.
  * <p/>
+ *
  * The reason I choose {@link android.os.AsyncTask} over {@link android.os.HandlerThread} is  that there are at most two tasks and they are short-lived.</li>
  * <p/>
  * The status of StreamActivity will be kept before it is destroyed, like the screen is rotated, or the user press the BACK button.
@@ -147,7 +148,6 @@ public class StreamActivity extends Activity {
         if (isFirstRun) {
             getFirstDataPiecesForTwoStreams();
             isFirstRun = false;
-            nextNumberBtn.setEnabled(false);
         }
     }
 

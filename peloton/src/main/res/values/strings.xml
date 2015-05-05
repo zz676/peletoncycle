@@ -6,7 +6,7 @@
     <string name = "image_content_description">Logo</string>
 
     <!-- Strings for activity_main.xml -->
-    <string name="instruction_string">Input stream names and press START; Press NEXT NUMBER to display next number. </string>
+    <string name="instruction_string">Input stream names and press START; On the next screen, Press NEXT NUMBER to display next number. </string>
     <string name = "no_networking_connection">"No networking connection, please check."</string>
     <string name = "server_unreachable">"The server can't be reached, please check."</string>
     <string name = "btn_start">START</string>
