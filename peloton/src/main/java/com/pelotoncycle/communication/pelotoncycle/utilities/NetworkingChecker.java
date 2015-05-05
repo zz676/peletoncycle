@@ -41,12 +41,13 @@ public class NetworkingChecker {
                     new Thread() {
                         @Override
                         public void run() {
-                            HttpGet requestForTest = new HttpGet(serverUrl);
+
                             try {
+                                HttpGet requestForTest = new HttpGet(serverUrl);
                                 new DefaultHttpClient().execute(requestForTest); // can last...
                                 responded = true;
-                            } catch (IOException e) {
-                                Log.e(TAG, e.getMessage());
+                            } catch (Exception e) {
+                                Log.e(TAG, e.getMessage() + " in NetworkingChecker.isNetworkAvailable");
                             }
                         }
                     }.start();
@@ -59,8 +60,8 @@ public class NetworkingChecker {
                                 waited += 100;
                             }
                         }
-                    } catch (InterruptedException e) {
-                        Log.e(TAG, e.getMessage());
+                    } catch (Exception e) {
+                        Log.e(TAG, e.getMessage() +  "in NetworkingChecker.isNetworkAvailable");
                     } finally {
                         if (!responded) {
                             handler.sendEmptyMessage(0);

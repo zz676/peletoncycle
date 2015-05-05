@@ -3,7 +3,11 @@ package com.pelotoncycle.communication.pelotoncycle.utilities;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.pelotoncycle.communication.pelotoncycle.Controllers.MainActivity;
+import com.pelotoncycle.communication.pelotoncycle.Controllers.StreamActivity;
 import com.pelotoncycle.communication.pelotoncycle.models.DataPiece;
 
 /**
@@ -13,6 +17,9 @@ import com.pelotoncycle.communication.pelotoncycle.models.DataPiece;
  * @version 1.0
  */
 public class StreamDataTask extends AsyncTask<String, Void, DataPiece> {
+
+    //a tag for logging
+    private final static String TAG = "StreamDataTask";
 
     //Used to send messages back to the UI
     private Handler mainUIHandler;
@@ -33,9 +40,13 @@ public class StreamDataTask extends AsyncTask<String, Void, DataPiece> {
 
     @Override
     protected DataPiece doInBackground(String... params) {
-
-        String url = params[0];
-        return StreamNumService.getDataPiece(url);
+        try{
+            String url = params[0];
+            return StreamNumService.getDataPiece(url);
+        } catch (Exception ex){
+            Log.e(TAG, ex.getMessage() + " in doInBackground");
+        }
+        return null;
     }
 
     @Override

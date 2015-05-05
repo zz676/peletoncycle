@@ -30,17 +30,12 @@ public class StreamNumService {
      * @param urlString the url of the stream
      * @return a {@link DataPiece} object
      */
-    public static DataPiece getDataPiece(final String urlString) {
+    public static DataPiece getDataPiece(final String urlString) throws Exception {
 
-        try {
-            String json = getResponseJSON(urlString);
-            JSONObject jsonObject = new JSONObject(json);
-            return jsonToDataPieceObject(jsonObject);
+        String json = getResponseJSON(urlString);
+        JSONObject jsonObject = new JSONObject(json);
+        return jsonToDataPieceObject(jsonObject);
 
-        } catch (JSONException ex) {
-            Log.e(TAG, ex.getMessage() + "StreamNumService.getDataPiece");
-        }
-        return null;
     }
 
     /**
@@ -49,18 +44,13 @@ public class StreamNumService {
      * @param jsonObject the json object to be converted
      * @return a DataPiece object
      */
-    public static DataPiece jsonToDataPieceObject(final JSONObject jsonObject) {
+    public static DataPiece jsonToDataPieceObject(final JSONObject jsonObject) throws Exception {
 
-        try {
-            DataPiece result = new DataPiece();
-            result.setsName(jsonObject.getString("stream"));
-            result.setLast(jsonObject.getInt("last"));
-            result.setCurrent(jsonObject.getInt("current"));
-            return result;
-        } catch (JSONException ex) {
-            Log.e(TAG, ex.getMessage() + " in StreamNumService.jsonToDataPieceObject");
-        }
-        return null;
+        DataPiece result = new DataPiece();
+        result.setsName(jsonObject.getString("stream"));
+        result.setLast(jsonObject.getInt("last"));
+        result.setCurrent(jsonObject.getInt("current"));
+        return result;
     }
 
     /**
@@ -69,7 +59,7 @@ public class StreamNumService {
      * @param urlString url for the stream
      * @return the json string
      */
-    private static String getResponseJSON(final String urlString) {
+    private static String getResponseJSON(final String urlString) throws Exception {
         StringBuilder content = new StringBuilder();
         HttpURLConnection urlConnection = null;
         try {
@@ -88,7 +78,7 @@ public class StreamNumService {
         } catch (IOException e) {
             Log.e(TAG, e.getMessage() + " in StreamNumService.getResponseJSON");
         } finally {
-            if(urlConnection != null){
+            if (urlConnection != null) {
                 urlConnection.disconnect();
             }
         }

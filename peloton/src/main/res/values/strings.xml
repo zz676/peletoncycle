@@ -10,7 +10,6 @@
     <string name = "btn_start">Start</string>
 
     <!-- Strings for activity_stream.xml -->
-    <string name="instruction_string">Specify Stream Names, and then press BUTTON to begin streaming</string>
     <string name="edit_text_stream_one_name">STREAM ONE: </string>
     <string name="edit_text_stream_two_name">STREAM TWO: </string>
     <string name="default_stream_num">SMILE</string>

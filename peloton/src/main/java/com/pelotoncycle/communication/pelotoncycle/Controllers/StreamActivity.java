@@ -42,9 +42,11 @@ import java.util.Set;
  * <p>
  * The status of StreamActivity will be kept before it is destroyed, like the screen is rotated, or the user press the BACK button.
  * But there is one exception: Whenever either of two streams's names is changed, data in {@link SharedPreferences} will be cleared.
- * <li>the screen is rotated.</>
- * <li></>
  *</p>
+ *
+ * <p>
+ *
+ * </p>
  *
  *
  * @author Zhisheng Zhou
@@ -107,7 +109,10 @@ public class StreamActivity extends Activity {
         networkReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                checkServerAvailability();
+
+                //check whether two streams could be remotely access
+                checkServerAvailability(MainActivity.PELOTON_API_SERVER + streamOneName);
+                checkServerAvailability(MainActivity.PELOTON_API_SERVER + streamTwoName);
             }
         };
     }
@@ -121,6 +126,7 @@ public class StreamActivity extends Activity {
         allNumsTextView = (TextView) findViewById(R.id.previous_numbers_textview);
         nextNumberBtn = (Button) findViewById(R.id.next_num_btn);
         previousNumsScrollView = (ScrollView) findViewById(R.id.previous_numbers_scrollview);
+        previousNumsScrollView.fullScroll(View.FOCUS_DOWN);
 
 
         //Retrieve the status if the user rotate the screen or come back after pressing BACK button
@@ -147,6 +153,7 @@ public class StreamActivity extends Activity {
         if (isFirstRun) {
             getFirstDataPiecesForTwoStreams();
             isFirstRun = false;
+            nextNumberBtn.setEnabled(false);
         }
     }
 
@@ -154,7 +161,7 @@ public class StreamActivity extends Activity {
      * Check whether the server could be reached in a reasonable time period. here the default value is 4 seconds)
      * If the server has no response in 4 seconds, the NEXT NUMBER will be disabled until the networking connection comes to be normal.
      */
-    private void checkServerAvailability() {
+    private void checkServerAvailability(final String url) {
         if (NetworkingChecker.isOnline(this)) {
             Handler handler = new Handler() {
                 @Override
@@ -163,7 +170,7 @@ public class StreamActivity extends Activity {
                     if (msg.what != 1) { // code if not connected
                         runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(StreamActivity.this, MainActivity.SERVER_UNREACHABLE, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(StreamActivity.this, MainActivity.SERVER_UNREACHABLE + ":" + url, Toast.LENGTH_SHORT).show();
                                 nextNumberBtn.setEnabled(false);
                             }
                         });
@@ -172,7 +179,7 @@ public class StreamActivity extends Activity {
                     }
                 }
             };
-            NetworkingChecker.isNetworkAvailable(handler, 4000, MainActivity.PELOTON_API_SERVER + streamOneName);
+            NetworkingChecker.isNetworkAvailable(handler, 2000, url);
         } else {
             Toast.makeText(StreamActivity.this, MainActivity.NO_NETWORKING_CONNECTION, Toast.LENGTH_SHORT).show();
             nextNumberBtn.setEnabled(false);

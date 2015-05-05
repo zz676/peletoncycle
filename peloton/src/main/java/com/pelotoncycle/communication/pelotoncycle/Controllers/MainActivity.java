@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pelotoncycle.communication.pelotoncycle.R;
@@ -24,7 +25,9 @@ import com.pelotoncycle.communication.pelotoncycle.utilities.NetworkingChecker;
 
 /**
  *
- *  The screen for users to input stream names
+ *  The screen for users to input stream names.
+ *  A {@link BroadcastReceiver} is registered to monitor the status of networking connection,
+ *  if there is no networking connections, the START button will be disabled.
  * @author Zhisheng Zhou
  * @version 1.0
  */
@@ -32,6 +35,7 @@ public class MainActivity extends Activity {
 
     private static final String TAG = "MainActivity";
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
+    private  final String INSTRUCTION_STRING = "Input Stream Names and then Press START";
     protected final static String PELOTON_API_SERVER = "https://api.pelotoncycle.com/quiz/next/";
     protected final static String NO_NETWORKING_CONNECTION = "No networking connection, please check.";
     protected final static String SERVER_UNREACHABLE = "The server can't be reached, please check.";
@@ -39,10 +43,12 @@ public class MainActivity extends Activity {
     protected static final String STREAM_TWO_NAME = "com.pelotoncycle.communication.pelotoncycle.Controllers.MainActivity.streamtwoname";
     protected static final String PREFS_NAMES = "com.pelotoncycle.communication.pelotoncycle.Controllers.MainActivity.preferences";
     private long mBackPressed;
+    private TextView instructionTxtView;
     private EditText txtStreamOneName;
     private EditText txtStreamTwoName;
     private Button startButton;
     private SharedPreferences sharedPreferences;
+    private boolean isInstructionShown = false;
 
     /**
      * the BroadcastReceiver used to monitor the status of networking connection on the device
@@ -103,6 +109,21 @@ public class MainActivity extends Activity {
                 handleNetWorkingStatusChange();
             }
         };
+        instructionTxtView = (TextView) findViewById(R.id.instruction_text_view);
+    }
+
+    /**
+     * show/hide instructions
+     * @param v the button
+     */
+    public void showInstruction(final View v){
+        if(isInstructionShown){
+            instructionTxtView.setText("");
+            isInstructionShown = false;
+        } else {
+            instructionTxtView.setText(INSTRUCTION_STRING);
+            isInstructionShown = true;
+        }
     }
 
     /**
