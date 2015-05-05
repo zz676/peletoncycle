@@ -32,22 +32,16 @@ import java.util.Set;
 
 /**
  * Activity for users to stream numbers
- * <p>Thoughts about streaming numbers:
+ * Thoughts about streaming numbers:
  * <li> Get the first {@link DataPiece} from two streams, and add them into two queues separately. This will be done sequentially.</li>
  * <li> Pop up the first number in both queue to compare, and show the smaller one on the screen. Remember to add the larger one back to its queue.</li>
  * In this algorithm, only one of the two queues will become empty at each time. Before popping up numbers from two queues,
  * the sizes of them will be checked, if one of them is empty, {@link StreamDataTask} will be started to get the next {@link DataPiece} from the right stream.
- *</p>
- *
- * <p>
+ * <p/>
+ * The reason I choose {@link android.os.AsyncTask} over {@link android.os.HandlerThread} is  that there are at most two tasks and they are short-lived.</li>
+ * <p/>
  * The status of StreamActivity will be kept before it is destroyed, like the screen is rotated, or the user press the BACK button.
  * But there is one exception: Whenever either of two streams's names is changed, data in {@link SharedPreferences} will be cleared.
- *</p>
- *
- * <p>
- *
- * </p>
- *
  *
  * @author Zhisheng Zhou
  * @version 1.0
@@ -126,7 +120,6 @@ public class StreamActivity extends Activity {
         allNumsTextView = (TextView) findViewById(R.id.previous_numbers_textview);
         nextNumberBtn = (Button) findViewById(R.id.next_num_btn);
         previousNumsScrollView = (ScrollView) findViewById(R.id.previous_numbers_scrollview);
-        previousNumsScrollView.fullScroll(View.FOCUS_DOWN);
 
 
         //Retrieve the status if the user rotate the screen or come back after pressing BACK button
@@ -146,6 +139,7 @@ public class StreamActivity extends Activity {
             //clear two sets after all the numbers are added into queues
             streamOneSet.clear();
             streamTwoSet.clear();
+            previousNumsScrollView.fullScroll(View.FOCUS_DOWN);
         }
 
         //If either of the streams' name is reset or the app is just started,
@@ -170,7 +164,7 @@ public class StreamActivity extends Activity {
                     if (msg.what != 1) { // code if not connected
                         runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(StreamActivity.this, MainActivity.SERVER_UNREACHABLE + ":" + url, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(StreamActivity.this, getResources().getString(R.string.no_networking_connection) + " URL:" + url, Toast.LENGTH_SHORT).show();
                                 nextNumberBtn.setEnabled(false);
                             }
                         });
@@ -181,7 +175,7 @@ public class StreamActivity extends Activity {
             };
             NetworkingChecker.isNetworkAvailable(handler, 2000, url);
         } else {
-            Toast.makeText(StreamActivity.this, MainActivity.NO_NETWORKING_CONNECTION, Toast.LENGTH_SHORT).show();
+            Toast.makeText(StreamActivity.this, getResources().getString(R.string.no_networking_connection), Toast.LENGTH_SHORT).show();
             nextNumberBtn.setEnabled(false);
         }
     }
@@ -285,7 +279,6 @@ public class StreamActivity extends Activity {
             if (numOne <= numTwo) {
                 currentNumberTextView.setText(Integer.toString(numOne));
                 allNumsTextView.append(Integer.toString(numOne) + " ");
-                previousNumsScrollView.fullScroll(View.FOCUS_DOWN);
 
                 //add numTwo back to the queue two
                 streamTwoQueue.offer(numTwo);
@@ -293,11 +286,11 @@ public class StreamActivity extends Activity {
             } else {
                 currentNumberTextView.setText(Integer.toString(numTwo));
                 allNumsTextView.append(Integer.toString(numTwo) + " ");
-                previousNumsScrollView.fullScroll(View.FOCUS_DOWN);
 
                 //add numOne back to the queue one
                 streamOneQueue.offer(numOne);
             }
+            previousNumsScrollView.fullScroll(View.FOCUS_DOWN);
         }
     }
 
